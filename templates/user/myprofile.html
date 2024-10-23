@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .form-control
+    {
+    margin-bottom:10px;
+    }
+    .signup
+    {
+    min-height:500px;
+    }
+    ::placeholder
+    {
+    font-size:13px;
+    }
+    input type
+    {
+    font-size:13px;
+    }
+
+</style>
+<div class="row py-2">
+    <div class="h3 text-center p-1"><b>My</b><b style="color:#4e83ab">Profile<i class="fa fa-id-badge"></i></b></div>
+    <div class="col-sm-3 pt-1"></div>
+    <div class="col-sm-6">
+        <div class="row">
+            <div class="col-sm-12">
+                {% if profile %}
+                {% for x in profile %}
+                <div class="card mb-3" style="border:1px solid #4e83ab;">
+                    <div class="row g-0 fontfamily" style="font-size:16px;">
+                        <div class="col-md-5 p-2" style="border:1px solid #4e83ab;">
+                            <img src="/{{x.ppic}}" class="img-fluid rounded-start" alt="..."style="height:230px;width:290px;">
+                        </div>
+                        <div class="col-md-7" style="border:1px solid #4e83ab;">
+                            <div class="card-body">
+                                <p class="card-title pt-2"><b style="color:#4e83ab;font-size:22px;">{{x.name}}</b></p>
+                                <p class="card-text"></p>
+                                <p><b>Date Of Birth: </b> {{x.dob}}</p>
+                                <p><b>Mobile No: </b> {{x.mobile}}</p>
+                                <p><b>Email id: </b> {{x.email}}</p>
+                                <p><b>Current Address: </b> {{x.address}}</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+                {% endif %}
+            </div>
+            {% if request.session.userid %}
+            <div class="col-sm-12 py-2">
+                <div class="h3 text-center"><b>Update</b><b style="color:#4e83ab">Profile<i class="fa fa-id-badge"></i></b>
+                </div>
+                <form method="post" autocomplete="off" enctype="multipart/form-data" style="font-size:13px;">
+                    {% csrf_token %}
+                    <div class="row fontfamily bg-light">
+                        <div class="col-sm-12 pb-2 pt-1">
+
+
+                            <b>Name</b><input type="text" name="name" required class="form-control"
+                                              placeholder="Enter your Name"/>
+                            <b>Date of Birth</b><input type="date" name="dob" required class="form-control font"
+                                                       placeholder="Enter your Birth date"/>
+                            <b>Mobile No</b><input type="number" name="mobile" required class="form-control"
+                                                placeholder="Enter your Mob no.."/>
+                            <b>Password</b><input type="password" name="passwd" required class="form-control"
+                                                  placeholder="Enter your Password"/>
+                            <b>Profile Picture</b><input type="file" name="ppic" required class="form-control font"/>
+                            <b>Address</b>
+                            <textarea class="form-control" name="address" style="min-height:80px;resize:none;"
+                                      placeholder="Enter Your Address." required></textarea>
+                            <input type="submit" value="Update" class="btn rounded but"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% else %}
+            <p class="fs-6 bg-light text-center"style="color:#4e83ab">No Data Found</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-sm-3"></div>
+</div>
+{% endblock %}
